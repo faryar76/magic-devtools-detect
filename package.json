@@ -1,0 +1,26 @@
+{
+	"name": "magic-devtools-detect",
+	"version": "3.0.1",
+	"description": "Detect if DevTools is open and even on undock!",
+	"license": "MIT",
+	"author": {
+		"name": "Faryar76",
+	},
+	 
+	"files": [
+		"index.js",
+	],
+	"keywords": [
+		"browser",
+		"detect",
+		"identify",
+		"check",
+		"dev",
+		"devtools",
+		"developer",
+		"orientation",
+		"placement",
+		"docked",
+		"undocked",
+	]
+}

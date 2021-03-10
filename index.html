@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="description" content="Detect if DevTools is open">
+		<meta name="author" content="Sindre Sorhus">
+		<meta name="viewport" content="width=device-width">
+		<title>devtools-detect • Detect if DevTools is open</title>
+		<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css">
+	</head>
+	<body>
+		 <style>
+			 html {
+				height: 100%;
+				width: 100%;
+				}
+
+				body {
+				height: 100%;
+				width: 100%;
+				display: flex;
+				}
+		 
+			 .red {
+				 background-color: rgb(215, 218, 20);
+			 }
+			 .green{
+				background-color: green;
+
+			 }
+			 #txt{
+				color: rgb(47, 0, 255);
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);	
+			 }
+			 .container{
+				 text-align: center;
+				 justify-content: center;
+			 }
+		 </style>
+		<div class="container">
+			 <h1 id="txt">
+
+			 </h1>
+		</div>
+		<script src="index.js"></script>
+		<script>
+			var myInterval = null ;
+			let sec = 0;
+			let timer = 10 ;
+			const customTimer = (callback)=>{
+				sec=Date.now();
+
+				myInterval = setInterval(()=>{
+
+				var now_sec=Date.now() - sec;
+				document.querySelector('#txt').innerHTML  = 'devtools is open <br> content will be lock is '+(Math.round(timer - now_sec/1000))+'seconds';
+				console.log(now_sec , timer)
+				if(now_sec/1000 > timer)
+				{
+					clearInterval(myInterval);
+					callback();
+				}
+				},10)
+			}
+		</script>
+		<script type="module">
+			
+			window.addEventListener('devtoolschange', event => {
+				if(event.isOpen)
+				{
+					document.querySelector('.container').className = 'container red';
+					customTimer(()=>{
+						devtools.disableWindow();
+					});
+				}else{
+					document.querySelector('.container').className = 'container green';
+					clearInterval(myInterval);
+					document.querySelector('#txt').innerHTML  = 'all safe! devtools is closed';
+				}
+				
+			});
+		</script>
+		 
+	</body>
+</html>
